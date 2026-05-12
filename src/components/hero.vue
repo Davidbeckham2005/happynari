@@ -1,7 +1,7 @@
 <script setup>
 import { motion, useScroll, useTransform } from "motion-v"
 import { getCloudinaryUrl } from "../composal/cloudinary"
-
+import wishes from "./wishes.vue"
 const { scrollY } = useScroll()
 const quotes = [
     "good things come to those who wait",
@@ -17,7 +17,8 @@ const fontSize = useTransform(scrollY, [0, 600], ["16vw", "2vw"])
 
 <template>
     <div class="h-[100vh] flex flex-col">
-        <div class="relative w-full overflow-hidden bg-transparent z-50 mask-edge">
+        <wishes></wishes>
+        <!-- <div class="relative w-full overflow-hidden bg-transparent z-50 mask-edge">
             <div
                 class="flex whitespace-nowrap border-t border-b border-pink-300/30 bg-pink-400/5 backdrop-blur-xs py-3 shadow-[0_0_20px_rgba(244,114,182,0.2)]">
                 <motion.div class="flex space-x-12 items-center" :animate="{ x: ['0%', '-50%'] }" :transition="{
@@ -35,7 +36,7 @@ const fontSize = useTransform(scrollY, [0, 600], ["16vw", "2vw"])
                     </div>
                 </motion.div>
             </div>
-        </div>
+        </div> -->
         <img :src="getCloudinaryUrl('https://res.cloudinary.com/drukcjhcg/image/upload/v1778408488/hero_xt7kg0.jpg')"
             class="absolute inset-0 w-full h-full object-cover opacity-80 md:opacity-100" />
         <!-- <div class="sticky top-0 w-full h-24 z-50">

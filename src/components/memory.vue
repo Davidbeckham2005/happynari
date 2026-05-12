@@ -1,27 +1,37 @@
 <template>
-    <section class="">
-        <div class="w-full h-10 bg-pink-600 border sticky top-0 z-10 rounded-2xl shadow-lg shadow-pink-500/20">
+    <section class="relative overflow-hidden min-h-screen">
+        <div class="absolute inset-0 pointer-events-none">
+            <div v-for="heart in hearts" :key="heart.id" class="absolute animate-float opacity-0 z-0" :style="{
+                left: heart.left + '%',
+                animationDuration: heart.duration + 's',
+                fontSize: heart.size + 'px',
+                animationDelay: heart.delay + 's',
+                bottom: 0
+            }">
+                ❤️
+            </div>
+            <div v-for="star in stars" :key="star.id" class="absolute opacity-1 animate-pulse z-0" :style="{
+                left: star.left + '%',
+                animationDuration: 2 + 's',
+                fontSize: star.size + 'px',
+                animationDelay: star.delay + 's',
+                top: star.top + '%',
+            }">
+                ✨
+            </div>
+        </div>
+        <div class="w-full h-10 bg-pink-600 border sticky top-0 z-10 shadow-lg shadow-pink-500/20">
             <span class="text-lg font-bold p-4 text-white"></span>
 
         </div>
         <div id="timeline" class="max-w-6xl mx-auto relative space-y-24 mt-4">
-            <div class="absolute inset-0 pointer-events-none">
-                <div v-for="heart in hearts" :key="heart.id" class="absolute animate-float opacity-0 z-40" :style="{
-                    left: heart.left + 'vw',
-                    animationDuration: heart.duration + 's',
-                    fontSize: heart.size + 'px',
-                    animationDelay: heart.delay + 's'
-                }">
-                    ❤️
-                </div>
 
-            </div>
             <div
-                class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-pink-400 via-purple-400 to-pink-400 -translate-x-1/2 rounded-full">
+                class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-pink-400 via-purple-400 to-pink-400 -translate-x-1/2">
             </div>
 
             <div v-for="(memory, mindex) in memories" :key="mindex" D
-                class="relative flex flex-col md:flex-row items-center">
+                class="relative flex flex-col md:flex-row items-center my-8">
                 <!-- left/right card -->
                 <Motion as="div" :class="mindex % 2 === 0 ? 'md:w-1/2 md:pr-16' : 'md:w-1/2 md:order-2 md:pl-16'"
                     :initial="{ opacity: 0, x: mindex % 2 === 0 ? -50 : 50, y: 30 }"
@@ -62,17 +72,6 @@
                     <Star class="text-white fill-white" :size="24" />
                 </div>
                 <div class="hidden md:block md:w-1/2"></div>
-            </div>
-            <div class="absolute inset-0 pointer-events-none">
-                <div v-for="heart in hearts" :key="heart.id" class="absolute animate-float opacity-0 z-40" :style="{
-                    left: heart.left + 'vw',
-                    animationDuration: heart.duration + 's',
-                    fontSize: heart.size + 'px',
-                    animationDelay: heart.delay + 's'
-                }">
-                    ❤️
-                </div>
-
             </div>
         </div>
 
@@ -161,34 +160,44 @@ const memories = ref([
 
 
 const hearts = ref([])
-
+const stars = ref([])
 onMounted(() => {
     // Tạo ra 30 trái tim với các thông số ngẫu nhiên
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 30; i++) {
         hearts.value.push({
             id: i,
             left: Math.random() * 100,      // Vị trí ngang ngẫu nhiên (0-100vw)
-            duration: Math.random() * 5 + 5, // Tốc độ bay (5-10 giây)
+            duration: Math.random() * 30 + 5, // Tốc độ bay (5-10 giây)
             size: Math.random() * 20 + 15,   // Kích thước (15-35px)
             delay: Math.random() * 5         // Độ trễ lúc bắt đầu để không bay cùng lúc
         })
     }
+    for (let i = 0; i < 30; i++) {
+        stars.value.push({
+            id: i,
+            left: Math.random() * 100,      // Vị trí ngang ngẫu nhiên (0-100vw)
+            size: Math.random() * 20 + 15,   // Kích thước (15-35px)
+            delay: Math.random() * 5,        // Độ trễ lúc bắt đầu để không bay cùng lúc
+            top: Math.random() * 100,
+        })
+    }
 })
+
 </script>
 <style>
 /* ĐỊNH NGHĨA HOẠT ẢNH BAY */
 @keyframes float {
     0% {
-        transform: translateY(110vh) scale(0.5);
+        transform: translateY(0) scale(0.5);
         opacity: 0;
     }
 
     20% {
-        opacity: 0.6;
+        opacity: 0.8;
     }
 
     100% {
-        transform: translateY(-10vh) scale(1.2);
+        transform: translateY(-5000px) scale(1.2);
         opacity: 0;
     }
 }
@@ -197,6 +206,7 @@ onMounted(() => {
     animation-name: float;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    will-change: transform, opacity;
 }
 
 .fade-enter-active,
@@ -212,5 +222,25 @@ onMounted(() => {
 .fade-leave-to {
     opacity: 0;
     transform: scale(0.95);
+}
+
+@keyframes star-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.animate-pulse {
+    animation-name: star-twinkle;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
 }
 </style>

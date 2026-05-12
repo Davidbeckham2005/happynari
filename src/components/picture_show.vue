@@ -1,20 +1,14 @@
 <template>
-    <!-- Container cuộn: h-[300vh] để tạo không gian cho hiệu ứng bung -->
-    <div ref="container" class="h-[300vh] bg-zinc-950 relative">
+    <div ref="container" class="h-[300vh] bg-zinc-950 relative flex items-center justify-center overflow-hidden">
+        <div class="relative w-full h-full top-0">
+            <div v-for="(card, index) in cards" :key="index"
+                class="absolute inset-0 rounded-3xl border-[6px] border-white shadow-2xl transition-all duration-150 ease-out overflow-hidden"
+                :style="getCardStyle(card)">
+                <img :src="card.image" class="w-full h-full object-cover" />
 
-        <!-- Sticky Wrapper: Giữ ảnh luôn ở giữa màn hình khi cuộn -->
-        <div class="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-
-            <div class="relative w-[280px] h-[380px]">
-                <div v-for="(card, index) in cards" :key="index"
-                    class="absolute inset-0 rounded-3xl border-[6px] border-white shadow-2xl transition-all duration-150 ease-out overflow-hidden"
-                    :style="getCardStyle(card)">
-                    <img :src="card.image" class="w-full h-full object-cover" />
-
-                    <!-- Lớp phủ Glassmorphism nhẹ ở dưới ảnh cho "cute" -->
-                    <div class="absolute bottom-0 w-full p-4 bg-white/20 backdrop-blur-md text-white font-bold">
-                        {{ card.title }}
-                    </div>
+                <!-- Lớp phủ Glassmorphism nhẹ ở dưới ảnh cho "cute" -->
+                <div class="absolute bottom-0 w-full p-4 bg-white/20 backdrop-blur-md text-white font-bold">
+                    {{ card.title }}
                 </div>
             </div>
 
