@@ -21,14 +21,14 @@ const large = ref([
         text2: 'never run dry',
     },
     {
+        src: getCloudinaryUrl('https://res.cloudinary.com/drukcjhcg/image/upload/v1778410658/memory2023_03_hscglk.jpg'),
+        text1: 'The journey ',
+        text2: 'is the reward',
+    },
+    {
         src: getCloudinaryUrl('https://res.cloudinary.com/drukcjhcg/image/upload/v1778408488/memory4_rithev.jpg'),
         text1: 'Keep pushing ',
         text2: 'the boundaries',
     },
-    {
-        src: getCloudinaryUrl('https://res.cloudinary.com/drukcjhcg/image/upload/v1778426730/large_reyxxd.jpg'),
-        text1: 'The journey ',
-        text2: 'is the reward',
-    }
 ]);
 </script>

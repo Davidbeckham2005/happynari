@@ -31,7 +31,7 @@
             </div>
 
             <div v-for="(memory, mindex) in memories" :key="mindex" D
-                class="relative flex flex-col md:flex-row items-center my-8">
+                class="relative flex flex-col md:flex-row items-center my-8 p-8 md:p-0">
                 <!-- left/right card -->
                 <Motion as="div" :class="mindex % 2 === 0 ? 'md:w-1/2 md:pr-16' : 'md:w-1/2 md:order-2 md:pl-16'"
                     :initial="{ opacity: 0, x: mindex % 2 === 0 ? -50 : 50, y: 30 }"
@@ -48,12 +48,12 @@
                             </div>
 
                             <div
-                                class="absolute inset-0 bg-white/70 border border-pink-100 rounded-3xl shadow-lg transform rotate-3 scale-98 origin-bottom-right transition-transform duration-500 group-hover:rotate-6 group-hover:scale-95 z-0">
+                                class="absolute min-h-80 inset-0 bg-white/70 border border-pink-100 rounded-3xl shadow-lg transform rotate-3 scale-98 origin-bottom-right transition-transform duration-500 group-hover:rotate-6 group-hover:scale-95 z-0">
                             </div>
                             <transition name="fade" mode="out-in">
                                 <img :src="getCloudinaryUrl(memory.images[memory.activeImage])" loading="lazy"
                                     :key="memory.activeImage" :alt="memory.title" @click="nextImage(mindex)"
-                                    class="w-full h-88 object-cover rounded-3xl mb-5 shadow-lg shadow-pink-200/40 ring-2 ring-pink-200 relative z-10" />
+                                    class="w-full h-full object-cover rounded-3xl mb-5 shadow-lg shadow-pink-200/40 ring-2 ring-pink-200 relative z-10" />
                             </transition>
                             <div
                                 class="absolute bottom-2 right-2 z-20 text-xs px-3 py-2 rounded-full font-mono text-pink-400 font-bold bg-pink-100/80 backdrop-blur-sm shadow-sm shadow-pink-200/30">
@@ -157,8 +157,6 @@ const memories = ref([
     },
 
 ]);
-
-
 const hearts = ref([])
 const stars = ref([])
 onMounted(() => {

@@ -13,42 +13,59 @@
         </header> -->
         <wishes></wishes>
         <div ref="container" class="h-[120vh] bg-pink-300/15 relative rounded-3xl p-8">
-            <p
-                class="mt-8 max-w-2xl text-lg leading-relaxed text-zinc-700 md:text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 text-center">
-                I hope beautiful things
-                <br>
-                always find their way to you.
 
-            </p>
+            <div :class="['mt-8 max-w-2xl absolute top-1/2 left-1/2 -translate-x-1/2 text-center pointer-events-auto hover:text-pink-500 transition-colors', zindex]"
+                @click="openLetter">
+                <div class="text-6xl animate-bounce">💌</div>
+                <p class="text-lg leading-relaxed text-zinc-700 md:text-2xl cursor-pointer ">
+                    I hope beautiful things
+                    <br>
+                    always find their way to you.
+
+                </p>
+            </div>
             <div class="relative w-full h-full flex items-center justify-center overflow-hidden">
                 <div v-for="(card, index) in cards" :key="index"
                     class="absolute rounded-3xl border-[6px] border-white shadow-2xl transition-all duration-1200 ease-out overflow-hidden hover:scale-105"
                     :style="[getCardStyle(card), { height: card.height, aspectRatio: card.ratio }]"
                     @click="openImage(card)">
                     <img :src="card.image" class="absolute inset-0 w-full h-full object-cover" />
+
                     <!-- <div class="absolute bottom-0 w-full p-4 bg-white/20 backdrop-blur-md text-white font-bold">
                         {{ card.title }}
                     </div> -->
                 </div>
             </div>
             <transition name="fade">
-                <div v-if="selectedImage" class="fixed inset-0 z-[999] bg-black/80 flex items-center justify-center"
+                <div v-if="selectedImage" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
                     @click="closeImage">
-                    <img :src="selectedImage.image" class="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl" />
+                    <img :src="selectedImage.image" class="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-2xl relative" />
+                    <component :is="X" size="30"
+                        class="absolute top-4 right-4 font-bold text-pink-300 hover:text-pink-400 transition-all duration-200 cursor-pointer">
+                    </component>
                 </div>
             </transition>
-            <div class="h-[100vh]"></div>
+            <transition name="fade">
+                <div v-if="open_letter" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
+                    @click="closeLetter">
+                    <Letter></Letter>
+                </div>
+            </transition>
+            <div class="h-screen"></div>
         </div>
     </section>
 </template>
 
 <script setup>
+import { X } from 'lucide-vue-next';
+import Letter from './Letter.vue';
 import wishes from './wishes.vue';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 const container = ref(null);
 const scrollProgress = ref(0);
 import { getCloudinaryUrl } from '../composal/cloudinary';
-
+import { Flower } from '@lucide/vue';
+import { Mail } from '@lucide/vue';
 const cards = ref([
     {
         image: getCloudinaryUrl("https://res.cloudinary.com/drukcjhcg/image/upload/v1778411964/memory_2026_01_m5iugf.jpg"),
@@ -195,6 +212,18 @@ const openImage = (card) => {
 const closeImage = () => {
     selectedImage.value = null
 }
+const open_letter = ref(false)
+const openLetter = () => {
+    console.log("ds")
+    open_letter.value = true
+}
+const closeLetter = () => {
+    open_letter.value = false
+}
+
+const zindex = computed(() => {
+    return scrollProgress.value >= 1 ? 'z-50' : 'z-10';
+})
 </script>
 
 <style scoped>

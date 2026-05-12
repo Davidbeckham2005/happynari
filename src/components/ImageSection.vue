@@ -27,8 +27,8 @@
                     :transition="{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }">
                     {{ pic.text2 }}
                 </Motion>
-                <Motion class="h-1 bg-white mt-6 rounded-full" :initial="{ width: 0 }" :whileInView="{ width: '200px' }"
-                    :transition="{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }" />
+                <!-- <Motion class="h-1 bg-white mt-6 rounded-full" :initial="{ width: 0 }" :whileInView="{ width: '200px' }"
+                    :transition="{ duration: 1.5, delay: 0.5, ease: 'easeInOut' }" /> -->
 
             </div>
         </Motion>
