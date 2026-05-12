@@ -10,8 +10,8 @@ app.get('/api/birthday-message', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server đang chạy tại http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Server đang chạy tại http://localhost:${port}`);
+// });
 
 module.exports = app;
